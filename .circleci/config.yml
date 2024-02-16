@@ -1,14 +1,18 @@
 version:  2.1
 
+orbs:
+  git: circleci/git@1.0.0
+
 jobs:
   build:
     docker:
       - image: circleci/python:3.7
     steps:
       - checkout
-      - git/clone:
-          repo: https://github.com/DumprX/DumprX.git
-          path: DumprX
+      - run:
+          name: Clone DumprX
+          command: |
+            git clone https://github.com/DumprX/DumprX.git DumprX
       - run:
           name: Setup DumprX's Environment
           command: |
