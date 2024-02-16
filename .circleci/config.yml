@@ -9,7 +9,7 @@ jobs:
       - run:
           name: Clone DumprX
           command: |
-            git clone https://github.com/DumprX/DumprX.git DumprX
+            git clone https://github.com/DumprX/DumprX DumprX
       - run:
           name: Setup DumprX's Environment
           command: |
