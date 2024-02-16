@@ -1,0 +1,57 @@
+version:  2.1
+
+orbs:
+  git: circleci/git@1.0.0
+
+jobs:
+  build:
+    docker:
+      - image: circleci/python:3.7
+    steps:
+      - checkout
+      - git/clone:
+          repo: https://github.com/DumprX/DumprX.git
+          path: DumprX
+      - run:
+          name: Setup DumprX's Environment
+          command: |
+            sudo bash setup.sh
+            sudo apt install -y f2fs-tools
+            mkdir -p ~/.ssh
+            ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+            ssh-keyscan -t rsa gitlab.com >> ~/.ssh/known_hosts
+            git config --global user.name "Sushrut1101"
+            git config --global user.email "guptasushrut@gmail.com"
+      - run:
+          name: Setup Config envs
+          command: |
+            echo "$GITLAB_TOKEN" > .gitlab_token  # Only for Gitlab
+            echo "$GITLAB_GROUP" > .gitlab_group  # Only for Gitlab
+            echo "$PRIV_SSH_KEY" > ~/.ssh/id_rsa  # Only for Gitlab
+            echo "$BOT_TOKEN" > .tg_token
+            echo "$CHAT_ID" > .tg_chat
+            chmod  600 ~/.ssh/id_rsa
+      - run:
+          name: Run the Extra Command
+          command: |
+            $EXTRA_CMD
+      - run:
+          name: Start Dumping
+          command: |
+            ./dumper.sh "$ROM_URL"
+
+workflows:
+  version:  2
+  build_and_deploy:
+    jobs:
+      - build:
+          context: docker
+          environment:
+            ROM_URL: << pipeline.parameters.ROM_URL >>
+            EXTRA_CMD: << pipeline.parameters.EXTRA_CMD >>
+            PUSH_TO_GITLAB: << pipeline.parameters.PUSH_TO_GITLAB >>
+            GITLAB_TOKEN: << pipeline.parameters.GITLAB_TOKEN >>
+            GITLAB_GROUP: << pipeline.parameters.GITLAB_GROUP >>
+            PRIV_SSH_KEY: << pipeline.parameters.PRIV_SSH_KEY >>
+            BOT_TOKEN: << pipeline.parameters.BOT_TOKEN >>
+            CHAT_ID: << pipeline.parameters.CHAT_ID >>
