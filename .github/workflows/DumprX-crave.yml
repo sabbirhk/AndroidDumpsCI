@@ -49,8 +49,11 @@ jobs:
             rm -rf ${PWD}/crave.conf.sample          
             fi
          env:
-          CRAVE_USERNAME: ${{  secrets.CRAVE_USERNAME  }}
-          CRAVE_TOKEN: ${{  secrets.CRAVE_TOKEN  }}
+          GITLAB_TOKEN: ${{  secrets.GITLAB_TOKEN  }}
+          GITLAB_GROUP: ${{  secrets.GITLAB_GROUP  }}
+          PRIV_SSH_KEY: ${{  secrets.PRIV_SSH_KEY  }}
+          BOT_TOKEN: ${{  secrets.BOT_TOKEN  }}
+          CHAT_ID: ${{  secrets.CHAT_ID  }}
        - name: Extract using Crave
          working-directory: DumprX
          run: |
