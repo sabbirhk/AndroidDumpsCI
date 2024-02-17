@@ -1,4 +1,4 @@
-"ROM Dumper":
+ROM Dumper:
   env:
     GITLAB_TOKEN: "${GITLAB_TOKEN}"
     GITLAB_GROUP: "${GITLAB_GROUP}"
