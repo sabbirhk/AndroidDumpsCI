@@ -41,24 +41,24 @@ jobs:
               mv ${PWD}/crave ${HOME}/bin/
               sudo ln -sf /home/${USER}/bin/crave /usr/bin/crave
             fi
-       - name: Configure Crave Yaml
-         run: |
-           envsubst < ${PWD}/crave.yaml.sample > ${PWD}/crave.yaml
-           rm -rf ${PWD}/crave.conf.sample          
-         env:
-          GITLAB_TOKEN: ${{  secrets.GITLAB_TOKEN  }}
-          GITLAB_GROUP: ${{  secrets.GITLAB_GROUP  }}
-          PRIV_SSH_KEY: ${{  secrets.PRIV_SSH_KEY  }}
-          BOT_TOKEN: ${{  secrets.BOT_TOKEN  }}
-          CHAT_ID: ${{  secrets.CHAT_ID  }}
        - name: Clone DumprX
          run: | 
             rm -rf DumprX;
             git clone https://github.com/DumprX/DumprX
+       - name: Configure Crave Yaml
+         run: |
+              envsubst < ${PWD}/crave.yaml.sample > ${PWD}/crave.yaml
+              rm -rf ${PWD}/crave.conf.sample 
+              cp ${PWD}/crave.yaml DumprX/
+         env:
+             GITLAB_TOKEN: ${{  secrets.GITLAB_TOKEN  }}
+             GITLAB_GROUP: ${{  secrets.GITLAB_GROUP  }}
+             PRIV_SSH_KEY: ${{  secrets.PRIV_SSH_KEY  }}
+             BOT_TOKEN: ${{  secrets.BOT_TOKEN  }}
+             CHAT_ID: ${{  secrets.CHAT_ID  }}            
        - name: Extract using Crave
          run: |
               cd DumprX
-              cp ../crave.yaml .
               crave run -- "sudo bash setup.sh
               sudo apt install -y f2fs-tools
               mkdir -p ~/.ssh
