@@ -36,6 +36,7 @@ jobs:
               rm -rf DumprX
               git clone https://github.com/DumprX/DumprX.git DumprX
        - name: Configure the 'crave' environment
+         working-directory: DumprX
          run: |
             if [ "${DCDEVSPACE}" == "1" ]; then
             echo 'No need to set up crave, we are already running in devspace!'
