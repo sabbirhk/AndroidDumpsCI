@@ -37,8 +37,8 @@ jobs:
               git clone https://github.com/DumprX/DumprX.git DumprX
               cp crave.yaml.sample DumprX/
        - name: Configure the 'crave' environment
-         working-directory: DumprX
          run: |
+          cd DumprX &&
             if [ "${DCDEVSPACE}" == "1" ]; then
             echo 'No need to set up crave, we are already running in devspace!'
             else
