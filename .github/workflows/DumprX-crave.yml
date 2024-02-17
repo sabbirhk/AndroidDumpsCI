@@ -72,4 +72,4 @@ jobs:
               echo "$CHAT_ID" > .tg_chat; \
               chmod 600 ~/.ssh/id_rsa
               $EXTRA_CMD
-              ./dumper.sh "$ROM_URL"
+              ./dumper.sh "$ROM_URL""
