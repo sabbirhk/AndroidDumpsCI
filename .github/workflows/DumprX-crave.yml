@@ -40,9 +40,11 @@ jobs:
               mkdir ${HOME}/bin/
               mv ${PWD}/crave ${HOME}/bin/
               sudo ln -sf /home/${USER}/bin/crave /usr/bin/crave
-              envsubst < ${PWD}/crave.yaml.sample > ${PWD}/crave.yaml
-              rm -rf ${PWD}/crave.conf.sample          
             fi
+       - name: Configure Crave Yaml
+         run: |
+           envsubst < ${PWD}/crave.yaml.sample > ${PWD}/crave.yaml
+           rm -rf ${PWD}/crave.conf.sample          
          env:
           GITLAB_TOKEN: ${{  secrets.GITLAB_TOKEN  }}
           GITLAB_GROUP: ${{  secrets.GITLAB_GROUP  }}
