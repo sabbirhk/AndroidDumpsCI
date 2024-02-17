@@ -31,6 +31,11 @@ jobs:
     steps:
        - name: Checkouts
          uses: actions/checkout@v2
+         
+      # Cleanup The Actions Workspace Using Custom Composite Run Actions
+       - name: Cleanup
+         uses: rokibhasansagar/slimhub_actions@main
+      # That's it! Now use your normal steps
 
        - name: Clone Our Firmware Dumper
          run: |
