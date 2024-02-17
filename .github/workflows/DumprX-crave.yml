@@ -29,8 +29,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-       - name: Checkouts
-         uses: actions/checkout@v2
+       # Check-out in order to access the repository's files.
+       - name: Check-out to repository
+         uses: actions/checkout@v4
        - name: Configure the 'crave' environment
          run: |
             if [ "${DCDEVSPACE}" == "1" ]; then
