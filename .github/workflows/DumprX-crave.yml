@@ -31,14 +31,8 @@ jobs:
     steps:
        - name: Checkouts
          uses: actions/checkout@v2
-       - name: Clone Our Firmware Dumper
-         run: |
-              rm -rf DumprX
-              git clone https://github.com/DumprX/DumprX.git DumprX
-              cp crave.yaml.sample DumprX/
        - name: Configure the 'crave' environment
          run: |
-          cd DumprX &&
             if [ "${DCDEVSPACE}" == "1" ]; then
             echo 'No need to set up crave, we are already running in devspace!'
             else
@@ -58,7 +52,7 @@ jobs:
        - name: Extract using Crave
          working-directory: DumprX
          run: |
-              crave run -- "sudo bash setup.sh
+              crave run --projectID=77 -- "sudo bash setup.sh
               sudo apt install -y f2fs-tools
               mkdir -p ~/.ssh
               ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
