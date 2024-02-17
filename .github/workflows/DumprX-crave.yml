@@ -51,7 +51,7 @@ jobs:
           CHAT_ID: ${{  secrets.CHAT_ID  }}
        - name: Extract using Crave
          run: |
-              crave run --projectID=77 -- "sudo bash setup.sh
+              crave run --projectID=77 -c crave.yaml -- "sudo bash setup.sh
               sudo apt install -y f2fs-tools
               mkdir -p ~/.ssh
               ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
