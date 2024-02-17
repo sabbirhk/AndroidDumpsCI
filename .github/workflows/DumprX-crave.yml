@@ -55,7 +55,7 @@ jobs:
          run: | 
             rm -rf DumprX;
             git clone https://github.com/DumprX/DumprX
-            cp crave.yaml
+            cp crave.yaml DumprX
             cd DumprX
        - name: Extract using Crave
          run: |
