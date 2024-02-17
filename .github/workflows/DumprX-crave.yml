@@ -48,7 +48,7 @@ jobs:
          working-directory: DumprX 
          run: | 
               wget -o ${PWD}/crave.yaml.sample https://raw.githubusercontent.com/sounddrill31/AndroidDumpsCI/main/crave.yaml.sample
-              envsubst < ${PWD}/crave.yaml.sample > ${PWD}/crave.yaml
+              envsubst < ${PWD}/crave.yaml.sample >> ${PWD}/crave.yaml
               rm -rf ${PWD}/crave.conf.sample 
               # cp ${PWD}/crave.yaml DumprX/
          env:
