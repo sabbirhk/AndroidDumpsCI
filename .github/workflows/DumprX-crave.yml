@@ -33,7 +33,7 @@ jobs:
        - name: Clone DumprX
          run: | 
             rm -rf DumprX;
-            git clone https://github.com/DumprX/DumprX
+            git clone https://github.com/DumprX/DumprX DumprX
        - name: Configure the 'crave' environment
          run: |
             if [ "${DCDEVSPACE}" == "1" ]; then
