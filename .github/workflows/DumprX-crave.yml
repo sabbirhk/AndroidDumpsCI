@@ -58,6 +58,7 @@ jobs:
        - name: Extract using Crave
          run: |
               cd DumprX
+              cp ../crave.yaml .
               crave run -- "sudo bash setup.sh
               sudo apt install -y f2fs-tools
               mkdir -p ~/.ssh
