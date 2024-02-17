@@ -30,8 +30,10 @@ jobs:
 
     steps:
        # Check-out in order to access the repository's files.
-       - name: Check-out to repository
-         uses: actions/checkout@v4
+       - name: Clone DumprX
+         run: | 
+            rm -rf DumprX;
+            git clone https://github.com/DumprX/DumprX
        - name: Configure the 'crave' environment
          run: |
             if [ "${DCDEVSPACE}" == "1" ]; then
@@ -42,15 +44,13 @@ jobs:
               mv ${PWD}/crave ${HOME}/bin/
               sudo ln -sf /home/${USER}/bin/crave /usr/bin/crave
             fi
-       - name: Clone DumprX
-         run: | 
-            rm -rf DumprX;
-            git clone https://github.com/DumprX/DumprX
        - name: Configure Crave Yaml
-         run: |
+         working-directory: DumprX 
+         run: | 
+              wget -o crave.yaml.sample https://raw.githubusercontent.com/sounddrill31/AndroidDumpsCI/main/crave.yaml.sample
               envsubst < ${PWD}/crave.yaml.sample > ${PWD}/crave.yaml
               rm -rf ${PWD}/crave.conf.sample 
-              cp ${PWD}/crave.yaml DumprX/
+              # cp ${PWD}/crave.yaml DumprX/
          env:
              GITLAB_TOKEN: ${{  secrets.GITLAB_TOKEN  }}
              GITLAB_GROUP: ${{  secrets.GITLAB_GROUP  }}
@@ -58,8 +58,8 @@ jobs:
              BOT_TOKEN: ${{  secrets.BOT_TOKEN  }}
              CHAT_ID: ${{  secrets.CHAT_ID  }}            
        - name: Extract using Crave
+         working-directory: DumprX
          run: |
-              cd DumprX
               crave run --project 77 -- "sudo bash setup.sh
               sudo apt install -y f2fs-tools
               mkdir -p ~/.ssh
