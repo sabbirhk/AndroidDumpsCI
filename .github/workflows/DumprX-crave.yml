@@ -35,6 +35,7 @@ jobs:
          run: |
               rm -rf DumprX
               git clone https://github.com/DumprX/DumprX.git DumprX
+              cp crave.yaml.sample DumprX/
        - name: Configure the 'crave' environment
          working-directory: DumprX
          run: |
