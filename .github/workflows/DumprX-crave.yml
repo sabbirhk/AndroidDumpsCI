@@ -31,17 +31,7 @@ jobs:
     steps:
        - name: Checkouts
          uses: actions/checkout@v2
-         
-      # Cleanup The Actions Workspace Using Custom Composite Run Actions
-       - name: Cleanup
-         uses: rokibhasansagar/slimhub_actions@main
-      # That's it! Now use your normal steps
-
-       - name: Clone Our Firmware Dumper
-         run: |
-              git clone https://github.com/DumprX/DumprX.git DumprX
        - name: Configure the 'crave' environment
-         working-directory: DumprX
          run: |
             if [ "${DCDEVSPACE}" == "1" ]; then
             echo 'No need to set up crave, we are already running in devspace!'
@@ -57,7 +47,6 @@ jobs:
           CRAVE_USERNAME: ${{  secrets.CRAVE_USERNAME  }}
           CRAVE_TOKEN: ${{  secrets.CRAVE_TOKEN  }}
        - name: Extract using Crave
-         working-directory: DumprX
          run: |
               crave run -- "sudo bash setup.sh
               sudo apt install -y f2fs-tools
