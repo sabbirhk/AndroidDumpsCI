@@ -50,7 +50,6 @@ jobs:
           BOT_TOKEN: ${{  secrets.BOT_TOKEN  }}
           CHAT_ID: ${{  secrets.CHAT_ID  }}
        - name: Extract using Crave
-         working-directory: DumprX
          run: |
               crave run --projectID=77 -- "sudo bash setup.sh
               sudo apt install -y f2fs-tools
