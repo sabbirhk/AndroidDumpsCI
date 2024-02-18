@@ -70,6 +70,7 @@ jobs:
       - name: Extract using Crave
         run: |
               cp crave.conf DumprX
+              cp crave.yaml DumprX
               cd DumprX
               crave run --projectID 77 -- "sudo bash setup.sh
               sudo apt install -y f2fs-tools
@@ -78,7 +79,7 @@ jobs:
               ssh-keyscan -t rsa gitlab.com >> ~/.ssh/known_hosts
               git config --global user.name "${{ github.actor }}"
               git config --global user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
-              echo "${GITLAB_TOKEN}" > .gitlab_token; \
+              echo  "${GITLAB_TOKEN}" > .gitlab_token; \
               echo "${GITLAB_GROUP}" > .gitlab_group; \
               echo "${PRIV_SSH_KEY}" > ~/.ssh/id_rsa; \
               echo "${BOT_TOKEN}" > .tg_token; \
