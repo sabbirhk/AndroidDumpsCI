@@ -39,10 +39,6 @@ jobs:
           mkdir workspace
           cd workspace
         continue-on-error: true      
-      - name: Clone DumprX
-        run: | 
-            rm -rf DumprX;
-            git clone https://github.com/DumprX/DumprX DumprX
       - name: Configure the 'crave' environment
         run: |
             if [ "${DCDEVSPACE}" == "1" ]; then
@@ -69,8 +65,6 @@ jobs:
              CRAVE_TOKEN: ${{  secrets.CRAVE_TOKEN  }}                        
       - name: Extract using Crave
         run: |
-              cp crave.conf DumprX
-              cd DumprX
               crave run --projectID 77 -- "sudo bash setup.sh
               sudo apt install -y f2fs-tools
               mkdir -p ~/.ssh
