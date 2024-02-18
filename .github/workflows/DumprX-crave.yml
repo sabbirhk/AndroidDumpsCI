@@ -65,7 +65,7 @@ jobs:
        - name: Extract using Crave
          working-directory: DumprX
          run: |
-              crave run -- "sudo bash setup.sh
+              crave -c crave.conf run -- "sudo bash setup.sh
               sudo apt install -y f2fs-tools
               mkdir -p ~/.ssh
               ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
