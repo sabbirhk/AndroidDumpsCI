@@ -80,3 +80,7 @@ jobs:
               chmod 600 ~/.ssh/id_rsa
               $EXTRA_CMD
               ./dumper.sh '$ROM_URL'"
+      # Only reach this when the user killed the workflow.
+      - name: Execute if the job is cancelled
+        if: ${{ cancelled() }}
+        run: crave stop --all
