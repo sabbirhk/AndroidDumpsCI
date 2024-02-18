@@ -79,11 +79,11 @@ jobs:
               ssh-keyscan -t rsa gitlab.com >> ~/.ssh/known_hosts
               git config --global user.name "${{ github.actor }}"
               git config --global user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
-              printf '%s' "$GITLAB_TOKEN" > .gitlab_token; \
-              printf '%s' "$GITLAB_GROUP" > .gitlab_group; \
-              printf '%s' "$PRIV_SSH_KEY" > .~/.ssh/id_rsa; \
-              printf '%s' "$BOT_TOKEN" > .gitlab_token; \
-              printf '%s' "$CHAT_ID" > .tg_chat; \
+              printf '%s' "$GITLAB_TOKEN" >> .gitlab_token; \
+              printf '%s' "$GITLAB_GROUP" >> .gitlab_group; \
+              printf '%s' "$PRIV_SSH_KEY" >> .~/.ssh/id_rsa; \
+              printf '%s' "$BOT_TOKEN" >> .gitlab_token; \
+              printf '%s' "$CHAT_ID" >> .tg_chat; \
               chmod 600 ~/.ssh/id_rsa
               $EXTRA_CMD
               ./dumper.sh '$ROM_URL'"
