@@ -89,4 +89,4 @@ jobs:
       # Only reach this when the user killed the workflow.
       - name: Execute if the job is cancelled
         if: ${{ cancelled() }}
-        run: crave stop --all
+        run: cd DumprX; crave stop --all
