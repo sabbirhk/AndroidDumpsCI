@@ -67,6 +67,7 @@ jobs:
               echo '${{ secrets.GITLAB_GROUP }}' > .gitlab_group  # Only for Gitlab; \
               echo '${{ secrets.BOT_TOKEN }}' > .tg_token;\ 
               echo '${{ secrets.CHAT_ID }}' > .tg_chat; \
+              crave set --projectID 77; \
               crave push --projectID 77 .github_token -d .github_token; \
               crave push --projectID 77 .github_orgname -d github_orgname; \
               crave push --projectID 77 .gitlab_token -d .gitlab_token; \ 
