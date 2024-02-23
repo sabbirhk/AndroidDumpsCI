@@ -34,15 +34,11 @@ jobs:
         uses: actions/checkout@v4
 
       # Set-up a spearate directory for the device.
-      - name: Set-up wokrspace environment
+      - name: Set-up workspace environment
         run: |
           mkdir workspace
           cd workspace
         continue-on-error: true      
-      - name: Clone DumprX
-        run: | 
-            rm -rf DumprX;
-            git clone https://github.com/DumprX/DumprX DumprX
       - name: Configure the 'crave' environment
         run: |
             if [ "${DCDEVSPACE}" == "1" ]; then
@@ -53,40 +49,36 @@ jobs:
               mv ${PWD}/crave ${HOME}/bin/
               sudo ln -sf /home/${USER}/bin/crave /usr/bin/crave
             fi
-      - name: Configure Crave Yaml
+      - name: Configure Crave Credentials
         run: | 
-              envsubst < ${PWD}/crave.yaml.sample >> ${PWD}/crave.yaml
-              rm -rf ${PWD}/crave.yaml.sample 
               envsubst < ${PWD}/crave.conf.sample >> ${PWD}/crave.conf
               rm -rf ${PWD}/crave.conf.sample
         env:
-             GITLAB_TOKEN: ${{  secrets.GITLAB_TOKEN  }}
-             GITLAB_GROUP: ${{  secrets.GITLAB_GROUP  }}
-             PRIV_SSH_KEY: ${{  secrets.PRIV_SSH_KEY  }}
-             BOT_TOKEN: ${{  secrets.BOT_TOKEN  }}
-             CHAT_ID: ${{  secrets.CHAT_ID  }} 
              CRAVE_USERNAME: ${{  secrets.CRAVE_USERNAME  }}
              CRAVE_TOKEN: ${{  secrets.CRAVE_TOKEN  }}                        
       - name: Extract using Crave
         run: |
-              cp crave.conf DumprX
-              cp crave.yaml DumprX
-              cd DumprX
-              crave run --projectID 77 -- "sudo bash setup.sh
-              sudo apt install -y f2fs-tools
-              mkdir -p ~/.ssh
-              ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
-              ssh-keyscan -t rsa gitlab.com >> ~/.ssh/known_hosts
-              git config --global user.name "${{ github.actor }}"
-              git config --global user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
-              printf '%s' "$GITLAB_TOKEN" >> .gitlab_token
-              printf '%s' "$GITLAB_GROUP" >> .gitlab_group
-              printf '%s' "$PRIV_SSH_KEY" >> ~/.ssh/id_rsa
-              printf '%s' "$BOT_TOKEN" >> .gitlab_token
-              printf '%s' "$CHAT_ID" >> .tg_chat
-              chmod 600 ~/.ssh/id_rsa
-              $EXTRA_CMD
-              ./dumper.sh '$ROM_URL'"
+              crave devspace -- " # Running DumprX Build! \
+              rm -rf DumprX; 
+              git clone https://github.com/DumprX/DumprX.git DumprX;
+              cd DumprX; 
+              rm -rf  .github_token .github_orgname .gitlab_token .gitlab_group ~/.ssh/id_rsa  .tg_token .tg_chat; \
+              # echo "${{ secrets.GIT_TOKEN }}" > .github_token
+              # echo "${{ secrets.GIT_ORG_NAME }}" > .github_orgname
+              echo "${{ secrets.GITLAB_TOKEN }}" > .gitlab_token  # Only for Gitlab
+              echo "${{ secrets.GITLAB_GROUP }}" > .gitlab_group  # Only for Gitlab
+              echo "${{ secrets.PRIV_SSH_KEY }}" > ~/.ssh/id_rsa  # Only for Gitlab
+              echo "${{ secrets.BOT_TOKEN }}" > .tg_token
+              echo "${{ secrets.CHAT_ID }}" > .tg_chat
+              chmod 600 ~/.ssh/id_rsa              
+              crave push --projectID 77 .github_token .github_orgname .gitlab_token .gitlab_group ~/.ssh/id_rsa  .tg_token .tg_chat
+              crave run --projectID 77 -- "sudo bash setup.sh; \
+              sudo apt install -y f2fs-tools; \
+              git config --global user.name "${{ github.actor }}"; \
+              git config --global user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"; \
+              chmod 600 ~/.ssh/id_rsa; \
+              $EXTRA_CMD; \
+              ./dumper.sh '$ROM_URL'""
       # Only reach this when the user killed the workflow.
       - name: Execute if the job is cancelled
         if: ${{ cancelled() }}

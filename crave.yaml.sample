@@ -1,7 +1,0 @@
-ROM Dumper:
-  env:
-    GITLAB_TOKEN: "${GITLAB_TOKEN}"
-    GITLAB_GROUP: "${GITLAB_GROUP}"
-    PRIV_SSH_KEY: "${PRIV_SSH_KEY}"
-    BOT_TOKEN: "${BOT_TOKEN}"
-    CHAT_ID: "${CHAT_ID}"
