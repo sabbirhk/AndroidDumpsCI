@@ -73,13 +73,13 @@ jobs:
               echo "${{ secrets.CHAT_ID }}" > .tg_chat
               chmod 600 ~/.ssh/id_rsa              
               crave push --projectID 77 .github_token .github_orgname .gitlab_token .gitlab_group ~/.ssh/id_rsa  .tg_token .tg_chat
-              crave run --projectID 77 -- "sudo bash setup.sh; \
+              crave run --projectID 77 -- 'sudo bash setup.sh; \
               sudo apt install -y f2fs-tools; \
               git config --global user.name "${{ github.actor }}"; \
               git config --global user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"; \
               chmod 600 ~/.ssh/id_rsa; \
               $EXTRA_CMD; \
-              ./dumper.sh '$ROM_URL'""
+              ./dumper.sh '${{ github.event.inputs.ROM_URL }}''"
       # Only reach this when the user killed the workflow.
       - name: Execute if the job is cancelled
         if: ${{ cancelled() }}
