@@ -67,8 +67,13 @@ jobs:
               echo '${{ secrets.GITLAB_GROUP }}' > .gitlab_group  # Only for Gitlab; \
               echo '${{ secrets.BOT_TOKEN }}' > .tg_token;\ 
               echo '${{ secrets.CHAT_ID }}' > .tg_chat; \
-              chmod 600 ~/.ssh/id_rsa;\
-              crave push --projectID 77 .github_token .github_orgname .gitlab_token .gitlab_group ~/.ssh/id_rsa  .tg_token .tg_chat;  \
+              crave push --projectID 77 .github_token -d .github_token; \
+              crave push --projectID 77 .github_orgname -d github_orgname; \
+              crave push --projectID 77 .gitlab_token -d .gitlab_token; \ 
+              crave push --projectID 77 .gitlab_group -d .gitlab_group; \
+              crave push --projectID 77 ~/.ssh/id_rsa -d ~/.ssh/id_rsa; \ 
+              crave push --projectID 77 .tg_token -d .tg_token; \ 
+              crave push --projectID 77 .tg_chat -d .tg_chat;  \
               crave run --projectID 77 -- "sudo bash setup.sh; \
               sudo apt install -y f2fs-tools; \
               git config --global user.name "${{ github.actor }}"; \
