@@ -48,6 +48,7 @@ jobs:
               mkdir ${HOME}/bin/
               mv ${PWD}/crave ${HOME}/bin/
               sudo ln -sf /home/${USER}/bin/crave /usr/bin/crave
+              mkdir ~/.ssh
             fi
       - name: Configure Crave Credentials
         run: | 
@@ -58,21 +59,17 @@ jobs:
              CRAVE_TOKEN: ${{  secrets.CRAVE_TOKEN  }}                        
       - name: Extract using Crave
         run: |
-              mkdir ~/.ssh
-              crave -c crave.conf devspace -- " # Running DumprX Build! \
-              rm -rf DumprX; 
+              crave -c crave.conf devspace -- "rm -rf DumprX; 
               git clone https://github.com/DumprX/DumprX.git DumprX;
               cd DumprX; 
               rm -rf  .github_token .github_orgname .gitlab_token .gitlab_group ~/.ssh/id_rsa  .tg_token .tg_chat; \
-              # echo "${{ secrets.GIT_TOKEN }}" > .github_token
-              # echo "${{ secrets.GIT_ORG_NAME }}" > .github_orgname
-              echo "${{ secrets.GITLAB_TOKEN }}" > .gitlab_token  # Only for Gitlab
-              echo "${{ secrets.GITLAB_GROUP }}" > .gitlab_group  # Only for Gitlab
-              echo "${{ secrets.PRIV_SSH_KEY }}" > ~/.ssh/id_rsa  # Only for Gitlab
-              echo "${{ secrets.BOT_TOKEN }}" > .tg_token
-              echo "${{ secrets.CHAT_ID }}" > .tg_chat
-              chmod 600 ~/.ssh/id_rsa              
-              crave push --projectID 77 .github_token .github_orgname .gitlab_token .gitlab_group ~/.ssh/id_rsa  .tg_token .tg_chat
+              echo "${{ secrets.GITLAB_TOKEN }}" > .gitlab_token  # Only for Gitlab; \
+              echo "${{ secrets.GITLAB_GROUP }}" > .gitlab_group  # Only for Gitlab; \
+              echo "${{ secrets.PRIV_SSH_KEY }}" > ~/.ssh/id_rsa  # Only for Gitlab; \
+              echo "${{ secrets.BOT_TOKEN }}" > .tg_token;\ 
+              echo "${{ secrets.CHAT_ID }}" > .tg_chat; \
+              chmod 600 ~/.ssh/id_rsa              ;\
+              crave push --projectID 77 .github_token .github_orgname .gitlab_token .gitlab_group ~/.ssh/id_rsa  .tg_token .tg_chat;  \
               crave run --projectID 77 -- 'sudo bash setup.sh; \
               sudo apt install -y f2fs-tools; \
               git config --global user.name "${{ github.actor }}"; \
