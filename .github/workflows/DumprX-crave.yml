@@ -61,7 +61,7 @@ jobs:
         run: |
               crave -c crave.conf devspace -- "rm -rf DumprX; 
               git clone https://github.com/DumprX/DumprX.git DumprX;
-              cd DumprX; 
+              cd DumprX; \
               rm -rf  .github_token .github_orgname .gitlab_token .gitlab_group ~/.ssh/id_rsa  .tg_token .tg_chat; \
               echo "${{ secrets.GITLAB_TOKEN }}" > .gitlab_token  # Only for Gitlab; \
               echo "${{ secrets.GITLAB_GROUP }}" > .gitlab_group  # Only for Gitlab; \
