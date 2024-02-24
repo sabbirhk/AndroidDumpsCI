@@ -98,6 +98,8 @@ jobs:
             fi
       - name: Extract using Crave
         run: |
+            git clone https://github.com/DumprX/DumprX
+            cd DumprX
              # echo "${{ secrets.GIT_TOKEN }}" > .github_token
                 # echo "${{ secrets.GIT_ORG_NAME }}" > .github_orgname
                 echo "${{ secrets.GITLAB_TOKEN }}" > .gitlab_token  # Only for Gitlab
