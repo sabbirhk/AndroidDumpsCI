@@ -104,12 +104,12 @@ jobs:
                 # echo "${{ secrets.GIT_ORG_NAME }}" > .github_orgname
                 echo "${{ secrets.GITLAB_TOKEN }}" > .gitlab_token  # Only for Gitlab
                 echo "${{ secrets.GITLAB_GROUP }}" > .gitlab_group  # Only for Gitlab
-                echo "${{ secrets.PRIV_SSH_KEY }}" > ~/.ssh/id_rsa  # Only for Gitlab
+                echo "${{ secrets.PRIV_SSH_KEY }}" > id_rsa  # Only for Gitlab
                 echo "${{ secrets.BOT_TOKEN }}" > .tg_token
                 echo "${{ secrets.CHAT_ID }}" > .tg_chat
               crave push --projectID 77 .gitlab_token -d /tmp/src/DumprX/.gitlab_token; \ 
               crave push --projectID 77 .gitlab_group -d /tmp/src/DumprX/.gitlab_group; \
-              crave push --projectID 77 ~/.ssh/id_rsa -d ~/.ssh/id_rsa; \ 
+              crave push --projectID 77 id_rsa -d ~/.ssh/id_rsa; \ 
               crave push --projectID 77 .tg_token -d /tmp/src/DumprX/.tg_token; \ 
               crave push --projectID 77 .tg_chat -d /tmp/src/DumprX/.tg_chat;  \
               crave run --projectID 77 -- "sudo bash setup.sh; \
