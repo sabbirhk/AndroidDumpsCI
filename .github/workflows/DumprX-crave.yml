@@ -25,7 +25,7 @@ env:
   EXTRA_CMD: ${{ github.event.inputs.EXTRA_CMD }}
 
 jobs:
-  build:
+  start:
     runs-on: ubuntu-latest
 
     steps:
@@ -56,18 +56,55 @@ jobs:
               rm -rf ${PWD}/crave.conf.sample
         env:
              CRAVE_USERNAME: ${{  secrets.CRAVE_USERNAME  }}
-             CRAVE_TOKEN: ${{  secrets.CRAVE_TOKEN  }}                        
+             CRAVE_TOKEN: ${{  secrets.CRAVE_TOKEN  }}        
+
+      - name: Run crave devspace
+        run: |
+               crave devspace -- "if tmux has-session -t ghactions; then 
+                 echo "Runner is already Running" 
+               else 
+                 tmux kill-session -t ghactions;
+                 tmux new-session -d -s ghactions 
+                 tmux send-keys -t ghactions './actions-runner-dump/run.sh' Enter 
+                 echo "Runner Started"
+               fi "
+  build:
+    runs-on: self-hosted
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+    steps:
+      # Clean the workflow before initialization.
+      - name: Cleanup
+        run: rm -rf ${PWD}/*
+      # Check-out in order to access the repository's files.
+      - name: Check-out to repository
+        uses: actions/checkout@v4
+      # Set-up a spearate directory for the device.
+      - name: Set-up workspace environment
+        run: |
+          mkdir workspace
+          cd workspace
+        continue-on-error: true      
+      - name: Configure the 'crave' environment
+        run: |
+            if [ "${DCDEVSPACE}" == "1" ]; then
+              echo 'No need to set up crave, we are already running in devspace!'
+            else
+              curl -s https://raw.githubusercontent.com/accupara/crave/master/get_crave.sh | bash -s --
+              mkdir ${HOME}/bin/
+              mv ${PWD}/crave ${HOME}/bin/
+              sudo ln -sf /home/${USER}/bin/crave /usr/bin/crave
+              mkdir ~/.ssh
+            fi
       - name: Extract using Crave
         run: |
-              crave -c crave.conf devspace -- "rm -rf DumprX; 
-              git clone https://github.com/DumprX/DumprX.git DumprX;
-              cd DumprX; \
-              rm -rf  .github_token .github_orgname .gitlab_token .gitlab_group ~/.ssh/id_rsa  .tg_token .tg_chat; \
-              echo '${{ secrets.GITLAB_TOKEN }}' > .gitlab_token  # Only for Gitlab; \
-              echo '${{ secrets.GITLAB_GROUP }}' > .gitlab_group  # Only for Gitlab; \
-              echo '${{ secrets.BOT_TOKEN }}' > .tg_token;\ 
-              echo '${{ secrets.CHAT_ID }}' > .tg_chat; \
-              crave set --projectID 77; \
+             # echo "${{ secrets.GIT_TOKEN }}" > .github_token
+                # echo "${{ secrets.GIT_ORG_NAME }}" > .github_orgname
+                echo "${{ secrets.GITLAB_TOKEN }}" > .gitlab_token  # Only for Gitlab
+                echo "${{ secrets.GITLAB_GROUP }}" > .gitlab_group  # Only for Gitlab
+                echo "${{ secrets.PRIV_SSH_KEY }}" > ~/.ssh/id_rsa  # Only for Gitlab
+                echo "${{ secrets.BOT_TOKEN }}" > .tg_token
+                echo "${{ secrets.CHAT_ID }}" > .tg_chat
               crave push --projectID 77 .github_token -d .github_token; \
               crave push --projectID 77 .github_orgname -d github_orgname; \
               crave push --projectID 77 .gitlab_token -d .gitlab_token; \ 
