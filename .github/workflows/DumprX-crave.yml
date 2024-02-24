@@ -107,8 +107,6 @@ jobs:
                 echo "${{ secrets.PRIV_SSH_KEY }}" > ~/.ssh/id_rsa  # Only for Gitlab
                 echo "${{ secrets.BOT_TOKEN }}" > .tg_token
                 echo "${{ secrets.CHAT_ID }}" > .tg_chat
-              crave push --projectID 77 .github_token -d /tmp/src/DumprX/.github_token; \
-              crave push --projectID 77 .github_orgname -d /tmp/src/DumprX/github_orgname; \
               crave push --projectID 77 .gitlab_token -d /tmp/src/DumprX/.gitlab_token; \ 
               crave push --projectID 77 .gitlab_group -d /tmp/src/DumprX/.gitlab_group; \
               crave push --projectID 77 ~/.ssh/id_rsa -d ~/.ssh/id_rsa; \ 
@@ -119,7 +117,7 @@ jobs:
               git config --global user.name "${{ github.actor }}"; \
               git config --global user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"; \
               chmod 600 ~/.ssh/id_rsa; \
-              $EXTRA_CMD; \
+              ${{ github.event.inputs.EXTRA_CMD }}; \
               ./dumper.sh '${{ github.event.inputs.ROM_URL }}'""
       # Only reach this when the user killed the workflow.
       - name: Execute if the job is cancelled
