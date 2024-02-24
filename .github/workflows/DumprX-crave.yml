@@ -119,6 +119,8 @@ jobs:
               git config --global user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"; \
               chmod 600 ~/.ssh/id_rsa; \
               ${{ github.event.inputs.EXTRA_CMD }}; \
+              chmod +x dumper.sh;\
+              
               ./dumper.sh '${{ github.event.inputs.ROM_URL }}'""
       # Only reach this when the user killed the workflow.
       - name: Execute if the job is cancelled
