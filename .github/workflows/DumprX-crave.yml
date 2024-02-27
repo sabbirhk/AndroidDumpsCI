@@ -30,10 +30,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Cleanup 
+      - name: Cleanup Step
+        run: rm -rf *
       # Check-out in order to access the repository's files.
       - name: Check-out to repository
         uses: actions/checkout@v4
-
       # Set-up a spearate directory for the device.
       - name: Set-up workspace environment
         run: |
