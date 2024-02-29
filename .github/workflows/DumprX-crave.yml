@@ -124,7 +124,7 @@ jobs:
               git config --global user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"; \
               ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts;\
               ssh-keyscan -t rsa gitlab.com >> ~/.ssh/known_hosts; \
-              ssh-keyscan -t rsa ${{ secrets.GITLAB_INSTANCE }} >> ~/.ssh/known_hosts;\ 
+              ssh-keygen -f "~/.ssh/known_hosts" -R "${{ secrets.GITLAB_INSTANCE }}"; \
               mv id_rsa /home/admin/.ssh/id_rsa;\
               eval "$(ssh-agent)"
               eval `ssh-agent -s`
