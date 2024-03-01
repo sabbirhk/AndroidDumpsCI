@@ -142,6 +142,7 @@ jobs:
               fi; \
               ${{ github.event.inputs.EXTRA_CMD }}; \
               chmod +x dumper.sh;\
+              tmux; \
               yes | ./dumper.sh '${{ github.event.inputs.ROM_URL }}'"
       # Only reach this when the user killed the workflow.
       - name: Execute if the job is cancelled
