@@ -144,11 +144,11 @@ jobs:
               chmod +x dumper.sh;\
               ./dumper.sh '${{ github.event.inputs.ROM_URL }}' 
               
-              \# This build was run from OkBuddyGSI 
-              \# Triggered by ${{ github.actor }} representing OkBuddyGSI
+              # This build was run from OkBuddyGSI 
+              # Triggered by ${{ github.actor }} representing OkBuddyGSI
               
-              \# Respect the Queue
-              \# Respect the rules"
+              # Respect the Queue
+              # Respect the rules"
       # Only reach this when the user killed the workflow.
       - name: Execute if the job is cancelled
         if: ${{ cancelled() }}
