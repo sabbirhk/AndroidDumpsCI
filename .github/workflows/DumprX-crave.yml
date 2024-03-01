@@ -104,8 +104,6 @@ jobs:
         run: |
             git clone https://github.com/DumprX/DumprX
             cd DumprX
-            jq '.projects = []' ~/crave.conf > tmp && mv tmp ~/crave.conf
-            crave set --projectID 77
                 echo "${{ secrets.GITLAB_TOKEN }}" > .gitlab_token  # Only for Gitlab
                 echo "${{ secrets.GITLAB_GROUP }}" > .gitlab_group  # Only for Gitlab
                 echo "${{ secrets.GITLAB_INSTANCE }}" > .gitlab_instance  # Only for Gitlab
