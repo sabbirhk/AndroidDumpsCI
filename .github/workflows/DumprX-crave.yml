@@ -128,6 +128,18 @@ jobs:
               mv id_rsa /home/admin/.ssh/id_rsa;\
               ssh-add /home/admin/.ssh/id_rsa; \
               chmod 600 ~/.ssh/id_rsa; \
+              
+              if grep -q "HOST \*" ~/.ssh/config && grep -q "StrictHostKeyChecking no" ~/.ssh/config; then
+
+              echo "Changes are already present"
+
+              else
+
+              echo "HOST *" > ~/.ssh/config
+
+              echo "StrictHostKeyChecking no" >> ~/.ssh/config
+
+              fi; \
               ${{ github.event.inputs.EXTRA_CMD }}; \
               chmod +x dumper.sh;\
               yes | ./dumper.sh '${{ github.event.inputs.ROM_URL }}'"
