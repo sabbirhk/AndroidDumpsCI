@@ -78,7 +78,7 @@ jobs:
     steps:
       # Clean the workflow before initialization.
       - name: Cleanup
-        run: rm -rf ${PWD}/*
+        run: rm -rf ${PWD}/* /crave-devspaces/.repo
       # Check-out in order to access the repository's files.
       - name: Check-out to repository
         uses: actions/checkout@v4
