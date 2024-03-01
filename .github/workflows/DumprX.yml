@@ -65,6 +65,17 @@ jobs:
               echo "${{ secrets.BOT_TOKEN }}" > .tg_token
               echo "${{ secrets.CHAT_ID }}" > .tg_chat
               chmod 600 ~/.ssh/id_rsa
+              if grep -q "HOST \*" ~/.ssh/config && grep -q "StrictHostKeyChecking no" ~/.ssh/config; then
+
+              echo "Changes are already present"
+
+              else
+
+              echo "HOST *" > ~/.ssh/config
+
+              echo "StrictHostKeyChecking no" >> ~/.ssh/config
+
+              fi
 
        - name: Run the Extra Command
          working-directory: DumprX
