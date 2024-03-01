@@ -124,6 +124,7 @@ jobs:
               git config --global user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"; \
               ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts;\
               ssh-keyscan -t rsa gitlab.com >> ~/.ssh/known_hosts; \
+              ssh-keyscan ${{ secrets.GITLAB_INSTANCE }} -t ed25519 >> ~/.ssh/known_hosts;\
               mv id_rsa /home/admin/.ssh/id_rsa;\
               ssh-add /home/admin/.ssh/id_rsa; \
               chmod 600 ~/.ssh/id_rsa; \
