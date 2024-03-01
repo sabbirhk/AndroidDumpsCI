@@ -60,6 +60,7 @@ jobs:
               # echo "${{ secrets.GIT_ORG_NAME }}" > .github_orgname
               echo "${{ secrets.GITLAB_TOKEN }}" > .gitlab_token  # Only for Gitlab
               echo "${{ secrets.GITLAB_GROUP }}" > .gitlab_group  # Only for Gitlab
+              echo "${{ secrets.GITLAB_INSTANCE }}" > .gitlab_instance  # Only for Gitlab
               echo "${{ secrets.PRIV_SSH_KEY }}" > ~/.ssh/id_rsa  # Only for Gitlab
               echo "${{ secrets.BOT_TOKEN }}" > .tg_token
               echo "${{ secrets.CHAT_ID }}" > .tg_chat
