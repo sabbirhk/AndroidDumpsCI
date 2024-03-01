@@ -116,7 +116,7 @@ jobs:
               crave push --projectID 77 .gitlab_instance -d /tmp/src/DumprX/.gitlab_instance
               crave push --projectID 77 .tg_token -d /tmp/src/DumprX/.tg_token
               crave push --projectID 77 .tg_chat -d /tmp/src/DumprX/.tg_chat
-              crave run --projectID 77 -- "git pull; \
+              tmux new-session -d -s my_session 'crave run --projectID 77 -- "git pull; \
               rm -rf out/  input/; \
               sudo bash setup.sh; \
               sudo apt install -y f2fs-tools; \
@@ -132,7 +132,7 @@ jobs:
               chmod 600 ~/.ssh/id_rsa; \
               ${{ github.event.inputs.EXTRA_CMD }}; \
               chmod +x dumper.sh;\
-              ./dumper.sh '${{ github.event.inputs.ROM_URL }}'"
+              ./dumper.sh '${{ github.event.inputs.ROM_URL }}''"
       # Only reach this when the user killed the workflow.
       - name: Execute if the job is cancelled
         if: ${{ cancelled() }}
