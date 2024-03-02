@@ -100,7 +100,7 @@ jobs:
               mkdir ~/.ssh
             fi
       - name: Extract using Crave
-        timeout-minutes: 60  
+        timeout-minutes: 180  
         run: |
             git clone https://github.com/DumprX/DumprX
             cd DumprX
