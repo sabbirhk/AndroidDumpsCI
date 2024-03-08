@@ -17,7 +17,7 @@ defaults:
 
 env:
   # ROM
-  ROM_URL: ${{ github.event.inputs.ROM_URL }}
+  ROM_URL: ${{ https://drive.google.com/file/d/1IvaeseKEAezX4X8SN-MRAZniu5euH3Li/view?usp=drivesdk }}
 
   # Gitlab
   PUSH_TO_GITLAB: true
